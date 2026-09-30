@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preference/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextFormField(
               controller: ageController,
               textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: 'Age'
               )
@@ -52,6 +54,12 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 20,),
             InkWell(
               onTap: () async {
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                sp.setString('email', emailController.text.toString());
+                sp.setBool('isLogin', true);
+                Navigator.pushReplacement(context, 
+                MaterialPageRoute(builder: (context) => Homescreen())
+                );
               },
               child: Container(
                 height: 50,
